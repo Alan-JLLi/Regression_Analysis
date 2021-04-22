@@ -1,5 +1,5 @@
 # Regression_Analysis
-This is a group project based on Regression Analysis course in my second semester of my sophomore year. 
+This is a group project based on Regression Analysis course in the second semester of my sophomore year. 
 There is a report that further explains some detailed descriptions, statement, analysis of our model and work. 
 
 # Code
