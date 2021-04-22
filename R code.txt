@@ -1,0 +1,56 @@
+#multiple LED3 full model
+LED=read.csv(file.choose(),header=T)
+LED3=lm(Y~X2+X3*X3+X4+X5+X6+X7,data=LED)
+reg1=summary(LED3)
+anova(LED3)
+
+
+X=cbind(1,LED$X2,LED$X3,LED$X4,LED$X5,LED$X6,LED$X7)
+H=X%*%solve(t(X)%*%X)%*%t(X)
+Hjj=diag(H)
+PRESS=sum((LED3$residuals/(1-Hjj))^2)
+
+
+V=cbind(1,LED$X2,LED$X3,LED$X4,LED$X6)
+H=V%*%solve(t(V)%*%V)%*%t(V)
+Hjj=diag(H)
+PRESS2=sum((LED3$residuals/(1-Hjj))^2)
+
+
+LED4=read.csv(file.choose(),header=T)
+max.model = lm(Y~X2+X3*X3+X4+X5+X6+X7, data=LED4)
+smallest <- formula(lm(Y~1,LED4))
+bwd.model = step(max.model, direction='backward', scope=smallest)
+summary(bwd.model)
+
+
+library(car)
+library(carData)
+vif(LED4)
+
+
+library(car)
+LED5=lm(Y~X2+X3*X3+X4+X6,data=LED)
+outlierTest(LED5)
+
+
+LED5=lm(Y~X2+X3*X3+X4+X6,data=LED)
+fit1<-fitted(LED5)
+residuals1<-resid(LED5)
+plot(fit1,residuals1)
+abline(h=0)
+
+
+LED4=read.csv(file.choose(),header=T)
+LED5=lm(Y~X2+X3*X3+X4+X6,data=LED4)
+confint(LED5,level=0.95)
+
+
+library(ggplot2)
+a=read.csv(file.choose(),header=T,sep=",")
+ggplot(data=a, aes(x=Schooling, y= Life_expectancy))+geom_point(color="green")+stat_smooth(method="lm",se=FALSE)
+schoolandlife = lm(Life_expectancy~Schooling,data = a)
+anova(schoolandlife)
+reg2 = summary(schoolandlife)
+reg2
+
